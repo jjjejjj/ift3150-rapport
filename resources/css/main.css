@@ -144,6 +144,7 @@ header {
   text-align: center;
   font-size: .75rem;
   line-height: 1;
+  text-wrap: nowrap;
   &>:first-child {
     font-size: 3em;
     font-weight: 500;
@@ -168,6 +169,7 @@ nav {
   }
 
   li>* {
+    text-wrap: nowrap;
     text-decoration: underline 1px solid transparent;
     transition: .2s  ease color,
                 .15s ease text-decoration-color;
@@ -176,6 +178,7 @@ nav {
   li>*:is(:hover, .selected) { text-decoration-color: currentColor; }
   a[target="_blank"]::after {
     content: "↗";
+    display: inline-block;
     font-size: .75em;
     font-weight: 550;
     vertical-align: super;
@@ -194,14 +197,17 @@ nav {
 
 main {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: auto 1fr;
   align-items: baseline;
+  justify-items: end;
   gap: 3rem;
   padding: 12rem 0;
   width: calc(var(--page-width));
   margin: 0 auto;
 
   b { font-weight: 600; }
+
+  article { max-width: 80ch; }
 
   article>h1 {
     font-size: 3rem;
@@ -238,7 +244,7 @@ main {
 
   .note {
     padding: 1.5rem 1.75rem;
-    margin: 1rem 0;
+    margin: 2rem 0;
     background-color: var(--color-foreground);
     border-left: 3px solid var(--color-accent);
     border-radius: 2px;
@@ -357,11 +363,13 @@ aside {
 }
 
 article>:is(h2, h3) {
+  position: relative;
   &::before {
     content: "#";
     position: absolute;
     color: transparent;
     font-weight: 300;
+    left: 0;
     translate: calc(-100% - .375ch);
     transition: .2s .5s ease color;
   }
@@ -369,5 +377,5 @@ article>:is(h2, h3) {
     color: var(--color-subdued);
     transition-delay: 0s;
   }
-  &:target::before { color: var(--color-accent); }
+  &:target::before { color: var(--color-text); }
 }
