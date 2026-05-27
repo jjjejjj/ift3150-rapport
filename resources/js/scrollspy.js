@@ -69,8 +69,10 @@ function getLevel(tagName) {
 }
 
 function generateID(txt) {
-  return txt.trim()
-            .toLowerCase()
+  return txt.toLowerCase()
+            .replace(/\(.*\)/g, "")           // remove parentheticals
+            .replace(/\s+et\s+/g, " ")        // remove "et"
+            .trim()                           // trim whitespace
             .replace(/\s+/g, "-")             // convert spaces to -
             .normalize("NFD")                 // decompose to combining accents
             .replace(/[\u0300-\u036f]/g, ""); // remove accents
