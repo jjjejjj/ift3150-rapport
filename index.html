@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>IFT3150 | Rapport de Jérémie Dupuis</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap">
+
+  <link rel="stylesheet" href="resources/css/main.css">
+
+  <script src="resources/js/scrollspy.js" defer></script>
+</head>
+<body>
+
+  <header>
+    <span class="logo">
+      <span>IFT3150</span>
+      <span>Rapport de <b>Jérémie Dupuis</b></span>
+    </span>
+    <nav>
+      <ul>
+        <li><h1 class="selected">Survol</h1></li>
+        <li><a class="coming">Suivi</a></li>
+        <li><a class="coming" title="À venir">Architecture</a></li>
+        <li><a class="coming" title="À venir">Données</a></li>
+        <li><a target="_blank" href="https://github.com/ceduni/eco-campus/tree/jeremie">GitHub</a></li>
+        <li><a class="coming" title="À venir" target="_blank">Issues</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <article>
+      <p class="lead">
+        Ce site fait office de journal de bord et de rapport pour <a target="_blank" href="https://jeremiedupuis.com"><b>Jérémie&nbsp;Dupuis</b></a>,
+        dans le cadre du cours <b>IFT3150 Projet d’informatique</b> à la session d’<b>été 2026</b>,
+        à l’<b>Université de Montréal</b>, sous la supervision de <b>Louis-Edouard&nbsp;Lafontant</b>.
+      </p>
+      <div class="note">
+        <h2>Les objectifs, en résumé</h2>
+        <ul class="tasks">
+          <li>Développer une interface web comportant une carte des campus montréalais</li>
+          <li>Trouver des sources de données géolocalisées pertinentes</li>
+          <li>Présenter ces données sur la carte en donnant le plus de contrôle possible à l’utilisateur</li>
+        </ul>
+      </div>
+
+      <h2>Description du projet</h2>
+      <h3>Contexte</h3>
+      <p>
+        Ce projet reprend le travail effectué par d’<a target="_blank" href="https://github.com/ceduni/eco-campus/graphs/contributors">autres étudiantes</a>
+        dans la dernière année sur le concept d’Éco-Campus. Le projet original était un site web qui
+        avait pour but de présenter différentes données issues du <a target="_blank" href="https://stars.aashe.org">rapport Stars</a>
+        sur les universités montréalaises. L’interface était séparée en deux: d’une part, une carte
+        interactive permettait la visualisation de données géolocalisées sur le plan des campus, et
+        d’une autre, un graphe à barres permettait de comparer le score des universités participantes.
+      </p>
+      <p>
+        Mon projet est un fork d’Éco-Campus. L’objectif est de produire un site fini qui puisse
+        sensibiliser les étudiants et les employés des universités, ainsi que les preneurs de
+        décisions aux facteurs environnementaux qui affectent la qualité de vie sur les campus.
+      </p>
+
+      <h3>Problématique</h3>
+      <p>
+        L’aménagement du territoire et le développement durable sont parmi les plus importantes
+        parties de la solution aux changements climatiques. En tant qu’institutions d’avant-garde
+        scientifique, les universités doivent donner l’exemple en matière de développement durable
+        et d’aménagement.
+      </p>
+      <p>
+        Or, loin d’être égaux en la matière, les campus montréalais  ont chacun leurs forces et
+        leurs faiblesses, et nous avons intérêt à mettre ces aspects à l’avant-plan afin de
+        valoriser les bons et les moins bons coups des universités.
+      </p>
+      <p>
+        Bien qu’il existe des données ouvertes à ce sujet, il est souvent difficile pour le
+        citoyen moyen de les interpréter, voire d’y accéder. C’est pourquoi ce genre de données est
+        souvent diffusé via des sites web qui en font l’interprétation.
+      </p>
+
+      <h3>Proposition et objectifs</h3>
+      <p>
+        Comme le projet original, l’idée est de présenter un plan des campus montréalais, et de
+        permettre à l’utilisateur de visualiser différentes couches de données géolocalisées par-dessus.
+      </p>
+      <p>
+        L’interface sera faite pour donner le plus de liberté possible à l’utilisateur. Il doit
+        pouvoir se faire sa propre idée des forces et faiblesses de chaque campus. Les étudiants
+        pourront se faire une idée des campus où ils aimeraient étudier; les employés, ceux où ils
+        aimeraient travailler.
+      </p>
+      <p>
+        Concrètement, la plus importante partie du projet sera donc de trouver, intégrer et
+        présenter les sources de données.
+      </p>
+
+      <h3>Méthodologie</h3>
+      <p>
+        La première étape sera d’esquisser l’interface. Cette phase de conception permettra d’avoir
+        en tête l’aspect voulu durant tout le projet, et ainsi éviter de perdre trop de temps dans
+        les détails esthétiques, une fois dans le développement.
+      </p>
+      <p>
+        Ensuite, un prototype sera développée avec des données temporaires. Certaines solutions déjà
+        utilisées pour Éco-Campus pourront être réutilisées, mais d’autres solutions seront aussi
+        considérées.
+      </p>
+      <p>
+        Une fois le prototype en place, la partie la plus importante du projet pourra commencer:
+        celle d’intégrer les sources de données. Nous devrons faire différentes démarches auprès des
+        institutions pour obtenir toutes les données possibles. Seules les données pertinentes et
+        complètes seront retenues. Le plus il y aura de données, le plus l’outil sera utile.
+      </p>
+      <p>
+        La dernière partie sera consacrée au contrôle qualité et au raffinement de l’expérience
+        utilisateur. Dans un projet de sensibilisation et d’interprétation comme celui-ci, la
+        présentation compte pour beaucoup. Une fois le jeu de données finalisé, le feedback des
+        utilisateurs pourra être utilisé pour raffiner la présentation.
+      </p>
+      <p>
+        Au niveau de la gestion, les outils GitHub, particulièrement Issues, pourront être utilisés
+        pour organiser les tâches et les bugs du projet.
+      </p>
+
+      <h3>Validation et évaluation</h3>
+      <p>
+        L’évaluation sera essentiellement qualitative. Le feedback pourra être récolté en observant
+        des utilisateurs en action, et en discutant de leur expérience.
+      </p>
+      <p>
+        Des aspects plus techniques du projet pourront faire l’objet d’une évaluation plus
+        quantitative. Le pipeline de données pourra être testé pour sa fiabilité et flexibilité.
+        Le degré de contrôle de l’utilisateur sur les données pourrait potentiellement être mesuré également.
+      </p>
+
+      <h2>Échéancier</h2>
+      <table class="milestones">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Début</th>
+            <th>Fin</th>
+            <th>Livrable</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="done">
+            <th>Études préliminaires</th>
+            <td>4 mai</td>
+            <td>27 mai</td>
+            <td>Proposition de projet</td>
+          </tr>
+          <tr class="active">
+            <th>Conception</th>
+            <td>27 mai</td>
+            <td>3 juin</td>
+            <td>Maquette</td>
+          </tr>
+          <tr>
+            <th>Prototypage</th>
+            <td>3 juin</td>
+            <td>17 juin</td>
+            <td>Prototype d’interface</td>
+          </tr>
+          <tr>
+            <th>Recherche de données</th>
+            <td>17 juin</td>
+            <td>22 juillet</td>
+            <td>Couches de données</td>
+          </tr>
+          <tr>
+            <th>Finition</th>
+            <td>22 juillet</td>
+            <td>29 juillet</td>
+            <td>Version finale</td>
+          </tr>
+          <tr>
+            <th>Remise</th>
+            <td>8 août</td>
+            <td>14 août</td>
+            <td>Présentation + rapport</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Consultez la page <a>Suivi</a> pour plus de détails.
+      </p>
+    </article>
+
+    <aside></aside>
+  </main>
+
+  <footer></footer>
+
+</body>
+</html>
