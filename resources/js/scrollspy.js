@@ -42,7 +42,7 @@ for (const h of headings) {
   const headingDate = h.dataset.date;
   if (headingDate && headingDate !== "") li.dataset.date = headingDate;
   const lia = document.createElement("a");
-  lia.textContent = h.textContent;
+  lia.innerHTML = ha.innerHTML;
   lia.href = `#${h.id}`;
   li.append(lia);
   ul.append(li);

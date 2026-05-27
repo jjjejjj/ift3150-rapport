@@ -115,6 +115,8 @@ a {
   cursor: pointer;
 }
 
+small { opacity: .5; }
+
 
 /*----------------------------------*/
 /*            NAVIGATION            */
@@ -282,6 +284,12 @@ ul.tasks {
   }
 }
 
+.journal {
+  &>h2 { font-size: 1.5rem; }
+  .active { color: var(--color-accent); }
+  .future { color: var(--color-subdued); }
+}
+
 h3.table-heading {
   margin-bottom: 0;
   padding-left: .5rem;
@@ -352,6 +360,15 @@ aside {
     color: var(--color-subdued);
     transition: .1s ease color;
     &:is(:hover, .selected) { color: var(--color-text); }
+    &.active::before {
+      content: "";
+      position: absolute;
+      width: .5em;
+      height: .5em;
+      translate: calc(-100% - .5em) 60%;
+      background-color: var(--color-accent);
+      border-radius: 50%;
+    }
   }
 
   ul ul {
