@@ -293,8 +293,11 @@ table.milestones {
   thead th { border-bottom: 2px solid var(--color-interactive); }
 
   tr {
-    &.done { color: var(--color-subdued); }
     &.active { color: var(--color-accent); }
+    &.future { color: var(--color-subdued); }
+    th:nth-child(1) { border-right: 2px solid var(--color-interactive); }
+  }
+}
 
     :nth-child(1) {
       text-align: right;

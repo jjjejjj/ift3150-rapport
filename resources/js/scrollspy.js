@@ -39,6 +39,8 @@ for (const h of headings) {
 
   // Create toc item
   li = document.createElement("li");
+  const headingDate = h.dataset.date;
+  if (headingDate && headingDate !== "") li.dataset.date = headingDate;
   const lia = document.createElement("a");
   lia.textContent = h.textContent;
   lia.href = `#${h.id}`;
