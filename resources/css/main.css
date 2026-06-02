@@ -400,7 +400,7 @@ h3.table-heading {
   margin-bottom: 0;
   padding-left: .5rem;
 }
-h3.table-heading + table { margin-top: -1.875rem; }
+h3.table-heading + table { margin-top: -2rem; }
 
 table {
   font-size: 1.125rem;
