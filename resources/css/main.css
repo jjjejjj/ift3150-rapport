@@ -34,19 +34,43 @@ sub { font-feature-settings: "subs" on; }
 /*-----------------------------------*/
 
 @font-face {
-  font-family: Inter;
+  font-family: "Akkurat";
+  font-weight: 400;
   font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url("../fonts/InterVariable.woff2") format("woff2");
+  src: url("../fonts/akkurat/Akkurat-Regular.woff2") format("woff2"),
+       url("../fonts/akkurat/Akkurat-Regular.woff") format("woff");
 }
 
 @font-face {
-  font-family: Inter;
+  font-family: "Akkurat";
+  font-weight: 400;
   font-style: italic;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url("../fonts/InterVariable-Italic.woff2") format("woff2");
+  src: url("../fonts/akkurat/Akkurat-Italic.woff2") format("woff2"),
+       url("../fonts/akkurat/Akkurat-Italic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Akkurat";
+  font-weight: 700;
+  font-style: normal;
+  src: url("../fonts/akkurat/Akkurat-Bold.woff2") format("woff2"),
+       url("../fonts/akkurat/Akkurat-Bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Akkurat Mono";
+  font-weight: 400;
+  font-style: normal;
+  src: url("../fonts/akkurat-mono/AkkuratMono-Regular.woff2") format("woff2"),
+       url("../fonts/akkurat-mono/AkkuratMono-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Akkurat Mono";
+  font-weight: 700;
+  font-style: normal;
+  src: url("../fonts/akkurat-mono/AkkuratMono-Bold.woff2") format("woff2"),
+       url("../fonts/akkurat-mono/AkkuratMono-Bold.woff") format("woff");
 }
 
 
@@ -96,7 +120,7 @@ sub { font-feature-settings: "subs" on; }
   --page-width: min(calc(100vw - 4rem), 64rem);
 
   /* Default Theme */
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
+  font-family: "Akkurat", system-ui, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
   font-size: 16px;
   line-height: 1.5;
   color: var(--color-text);
@@ -149,7 +173,7 @@ header {
   text-wrap: nowrap;
   &>:first-child {
     font-size: 3em;
-    font-weight: 500;
+    font-weight: 400;
     transition: .2s ease font-size;
   }
   &>:last-child {
@@ -182,7 +206,7 @@ nav {
     content: "↗";
     display: inline-block;
     font-size: .75em;
-    font-weight: 550;
+    font-weight: 700;
     vertical-align: super;
   }
   li>*.coming {
@@ -207,42 +231,45 @@ main {
   width: calc(var(--page-width));
   margin: 0 auto;
 
-  b { font-weight: 600; }
+  b { font-weight: 700; }
 
-  article { max-width: 80ch; }
+  article {
+    max-width: 80ch;
+    font-size: 1.125rem;
+    line-height: 1.6;
+
+    p a, ul a {
+      text-decoration: underline 1px solid var(--color-subdued);
+      transition: .2s ease color,
+                  .2s ease text-decoration-color;
+      &:hover {
+        color: var(--color-accent);
+        text-decoration-color: currentColor;
+      }
+    }
+  }
 
   article>h1 {
     font-size: 3rem;
-    font-weight: 350;
     margin-bottom: .5rem;
   }
   article>h2 {
     font-size: 2rem;
-    font-weight: 450;
+    letter-spacing: -.01em;
     margin: 4rem 0 .5rem;
   }
   article>h3 {
     font-size: 1.25rem;
-    font-weight: 600;
+    font-weight: 700;
     margin: 2rem 0 .5rem;
   }
 
-  p { font-size: 1.125rem; }
-  p+p { margin-top: .5rem; }
-  p.lead {
+  .lead {
     font-size: 1.375rem;
-    font-weight: 350;
+    line-height: 1.5;
   }
 
-  p a {
-    text-decoration: underline 1px solid var(--color-subdued);
-    transition: .2s ease color,
-                .2s ease text-decoration-color;
-    &:hover {
-      color: var(--color-accent);
-      text-decoration-color: currentColor;
-    }
-  }
+  p+p { margin-top: .5rem; }
 
   .note {
     padding: 1.5rem 1.75rem;
@@ -253,7 +280,7 @@ main {
     h2, h3 {
       margin-bottom: .75rem;
       line-height: 1;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--color-accent);
       small {
         margin-left: .5em;
@@ -262,6 +289,33 @@ main {
         opacity: .333;
       }
     }
+  }
+}
+
+.journal {
+  &>h2 { font-size: 1.5rem; }
+  .active { color: var(--color-accent); }
+  .future { color: var(--color-subdued); }
+}
+
+
+/*---------------------------------*/
+/*              LISTS              */
+/*---------------------------------*/
+
+ul.bullets {
+  margin: .5rem 0;
+  li {
+    position: relative;
+    padding-left: 1.5rem;
+  }
+  li+li { margin-top: .25rem; }
+  li::before {
+    content: "•";
+    display: inline-block;
+    position: absolute;
+    translate: calc(-100% - .25em) -.0625em;
+    color: var(--color-subdued);
   }
 }
 
@@ -275,7 +329,7 @@ ul.tasks {
     content: "";
     display: inline-block;
     position: absolute;
-    top: .25em;
+    top: .375em;
     left: 0;
     width: 1rem;
     height: 1rem;
@@ -297,11 +351,10 @@ ul.tasks {
   }
 }
 
-.journal {
-  &>h2 { font-size: 1.5rem; }
-  .active { color: var(--color-accent); }
-  .future { color: var(--color-subdued); }
-}
+
+/*---------------------------------*/
+/*              TABLE              */
+/*---------------------------------*/
 
 h3.table-heading {
   margin-bottom: 0;
@@ -318,7 +371,6 @@ table {
     vertical-align: middle;
   }
   th {
-    font-weight: 500;
     width: max-content;
     text-wrap: balance;
   }
@@ -326,7 +378,7 @@ table {
     border-bottom: 2px solid var(--color-interactive);
     text-transform: uppercase;
     font-size: .75em;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: .05em;
   }
   tbody tr:nth-child(odd) { background-color: var(--color-foreground); }
@@ -356,6 +408,7 @@ table:is(.events, .milestones) tr th:nth-child(1) {
   width: 40%;
   min-width: max-content;
 }
+
 
 /*---------------------------------*/
 /*        TABLE OF CONTENTS        */
@@ -398,7 +451,7 @@ article>:is(h2, h3) {
     content: "#";
     position: absolute;
     color: transparent;
-    font-weight: 300;
+    font-weight: 400;
     left: 0;
     translate: calc(-100% - .375ch);
     transition: .2s .5s ease color;
