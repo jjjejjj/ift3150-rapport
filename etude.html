@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Étude préliminaire | IFT3150 | Rapport de Jérémie Dupuis</title>
+
+  <link rel="stylesheet" href="resources/css/main.css">
+
+  <script src="resources/js/scrollspy.js" defer></script>
+  <script src="resources/js/date.js" defer></script>
+</head>
+<body>
+
+  <header>
+    <span class="logo">
+      <span>IFT3150</span>
+      <span>Rapport de <b>Jérémie Dupuis</b></span>
+    </span>
+    <nav>
+      <ul>
+        <li><a href="./">Survol</a></li>
+        <li><a href="suivi">Suivi</a></li>
+        <li><h1 class="selected">Étude préliminaire</h1></li>
+        <li><a class="coming" title="À venir">Architecture</a></li>
+        <li><a class="coming"  title="À venir">Données</a></li>
+        <li><a target="_blank" href="https://github.com/ceduni/eco-campus/tree/jeremie">GitHub</a></li>
+        <li><a target="_blank" href="https://github.com/ceduni/eco-campus/issues">Issues</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <aside></aside>
+
+    <article>
+      <div class="lead">
+        <p>Les premières semaines ont été consacrées à</p>
+        <ul class="bullets">
+          <li>explorer le code et les documents de conception existants</li>
+          <li>trouver des jeux de données potentiels</li>
+          <li>trouver des projets similaires pour servir de référence</li>
+          <li>construire une maquette de l’interface</li>
+        </ul>
+        <p>Cette page présente le résultat de cette première phase.</p>
+      </div>
+
+
+      <h2>Diagnostique du projet original</h2>
+      <figure>
+        <img src="resources/figures/etude/og-carte.png">
+        <img src="resources/figures/etude/og-rapport.png">
+        <figcaption>Deux captures d’écran du projet original, tirées de la présentation finale.</figcaption>
+      </figure>
+      <p>
+        Le repo du projet original a été exploré, et plusieurs complications ont été notées.
+        En fait, je n’ai pas pu rouler la dernière version du projet sans erreur. Plusieurs clés d’API
+        ont expirées et les comptes ont été perdus. De plus, il semble que certaines branches n’ont
+        jamais été merge. Si bien que nous avons décidé de repartir à zéro pour le frontend.
+        Plusieurs parties du code pourront tout de même être réutilisées.
+      </p>
+      <p>
+        Je questionne aussi la pertinence du backend. Sauf si on veut permettre aux utilisateurs
+        de modifier les données eux-mêmes, je pense que ça complique l’architecture pour rien.
+        Des données pré-traitées, bien organisées, servies par la même machine que le frontend
+        devraient très bien faire l’affaire pour le moment.
+      </p>
+      <p>
+        Niveau conception, l’interface utilise très peu la carte, qui est pourtant centrale
+        à l’interface. Je compte remédier à cette lacune en exploitant au maximum cet aspect.
+        Je veux que toutes les données visualisées ou presque soit géoréférencées.
+      </p>
+      <p>
+        Finalement, on remarque que seules deux universités s’affichent, probablement par manque de
+        données sur les sources choisies. Je veux m’imposer comme contrainte que chaque couche de
+        données doit être disponible au moins sur les 4 grandes universités montréalaises, soit
+        l’UdeM, McGill, l’UQAM et Concordia. Sans ça, je trouve que ce n’est pas assez représentatif.
+      </p>
+      <p>
+        Toutes ces faiblesses seront adressées dans la nouvelle mouture du projet.
+      </p>
+
+
+      <h2>Jeux de données potentiels</h2>
+      <p>
+        Plusieurs sources de données potentielles ont été identifiées.
+      </p>
+
+      <h3>OpenStreetMap</h3>
+      <p>
+        <a href="https://www.openstreetmap.org" target="_blank">OSM</a> est une base de données
+        géographiques libre qui fonctionne avec des “tags”.
+        Ces tags prennent des valeurs en chaîne de caractères arbitraires, qui doivent donc être
+        standardisées par la communauté pour être utiles.
+        C’est à la fois la force et la faiblesse du système.
+        Il permet d’ajouter n’importe quelle donnée à un endroit géographique, mais il rend difficile
+        la standardisation à l’échelle de la planète.
+      </p>
+      <p>Dans un projet à l’échelle planétaire, ce serait quasiment impossible de bien utiliser les
+        données des campus universitaires. Cependant, pour un projet limité à une seule ville et une
+        poignée de sites universitaires, je crois bien pouvoir en profiter.
+      </p>
+      <p>
+        Les données des différents campus montréalais ne sont effectivement pas parfaitement
+        conformes entre elles, mais ce sera simple de les sélectionner manuellement, et ça en vaudra
+        la peine si ça donne accès à des données qu’on ne retrouve nulle part ailleurs.
+      </p>
+      <p>
+        Les données d’OSM peuvent être accédées programmatiquement via l’API <a href="https://overpass-api.de" target="_blank">Overpass</a>.
+        <a href="https://overpass-turbo.eu" target="_blank">Overpass Turbo</a> permet de tester des requêtes depuis le navigateur.
+        Il est également possible d’explorer les tags directement sur <a href="https://www.openstreetmap.org" target="_blank">openstreetmap.org</a>
+        en utilisant l’outil “?” sur la droite.
+      </p>
+      <p>
+        Cette source permet donc minimalement d’obtenir les périmètres et bâtiments des universités.
+        Elle est également un bon choix pour le stationnement pour voiture ainsi que pour vélo, bien
+        que leur exactitude reste à vérifier.
+      </p>
+      <p>
+        Il serait également possible d’estimer le couvert végétal grâce à OSM, mais je crois que
+        d’autres sources spécialisées seraient meilleures.
+      </p>
+      <figure>
+        <img src="resources/figures/etude/overpass-turbo.webp">
+        <pre>
+[<span class="kw">out</span>:<span class="kw">json</span>];
+(
+    <span class="comment">// Périmètres et bâtiments des campus</span>
+    <span class="kw">nwr</span>[<span class="string">"amenity"</span>~<span class="string">"university"</span>]({{bbox}});
+    <span class="kw">nwr</span>[<span class="string">"learning"</span>~<span class="string">"university"</span>]({{bbox}});
+    <span class="kw">nwr</span>[<span class="string">"building"</span>~<span class="string">"university"</span>]({{bbox}});
+
+    <span class="comment">// Stationnement</span>
+    <span class="kw">nwr</span>[<span class="string">"amenity"</span>=<span class="string">"parking"</span>]({{bbox}});
+
+    <span class="comment">// Stationnement pour vélo</span>
+    <span class="kw">nwr</span>[<span class="string">"amenity"</span>=<span class="string">"bicycle_parking"</span>]({{bbox}});
+);
+(._;>;);
+<span class="kw">out</span> <span class="kw">qt</span>;</pre>
+        <figcaption>
+          Exemple d’une requête à l’API Overpass.
+          En haut, l’interface d’Overpass Turbo, avec le code et le résultat visualisé.
+          En bas, la transcription du code.
+        </figcaption>
+      </figure>
+
+      <h3>ARTM</h3>
+      <p>
+        L’<a href="https://www.artm.quebec" target="_blank">Autorité régionale de transport métropolitain</a> est
+        l’organisation qui régit le transport de la grande région de Montréal.
+        Elle et ses prédécesseurs réalisent tous les 5 ans depuis 1970 l’enquête
+        <a href="https://www.artm.quebec/planification/enquetes-et-panel/#perspectives-mobilite" target="_blank">Perspectives mobilité</a> (anciennement Origine-Destination).
+        Cette enquête étudie les déplacements des résidents, que ce soit en transport actif, en transport en commun ou en auto.
+      </p>
+      <p>
+        Ces données peuvent déjà être pertinentes, mais il s’avère que le volet “enseignement
+        supérieur” de l’enquête concerne spécifiquement les campus universitaires. En plus,
+        il est effectué annuellement depuis 2023. Voici la liste des champs de cette source:
+      </p>
+      <ul class="bullets">
+        <li>statut</li>
+        <li>groupe d’âge</li>
+        <li>genre</li>
+        <li>cycle d’études</li>
+        <li>campus principal</li>
+        <li>mode de transports utilisés pour se rendre au campus</li>
+        <li>distance domicile-campus</li>
+        <li>type de vélo utilisé pour se rendre au campus</li>
+        <li>lieu de stationnement (vélo)</li>
+        <li>type de véhicule utilisé pour se rendre au campus</li>
+        <li>type de carburant utilisé</li>
+        <li>compatibilité activité principale avec télétravail</li>
+        <li>incitatif de promotion du covoiturage</li>
+        <li>possession abonnement annuel ou mensuel (transport en commun)</li>
+        <li>types de passe utilisé</li>
+        <li>possession abonnement vélo-partage</li>
+        <li>possède un vélo dans un bon état</li>
+        <li>possède un vélo à assistance électrique</li>
+      </ul>
+      <p>Ce jeu de données devrait régler la question de la part modale des déplacements.</p>
+
+      <h3>Ville de Montréal</h3>
+      <p>
+        Le site des <a href="https://donnees.montreal.ca" target="_blank">données ouvertes de la Ville de Montréal</a>
+        offre une centaine de jeu de données géolocalisées. Ceux qui semblent le plus intéressant sont:
+      </p>
+      <ul class="bullets">
+        <li><a href="https://donnees.montreal.ca/dataset/taux-vegetalisation-mineralisation-surfaces" target="_blank">Taux de végétalisation et de minéralisation des surfaces</a></li>
+        <li><a href="https://donnees.montreal.ca/dataset/bois" target="_blank">Bois</a></li>
+        <li><a href="https://donnees.montreal.ca/dataset/canopee" target="_blank">Canopée</a></li>
+        <li><a href="https://donnees.montreal.ca/dataset/ilots-de-chaleur" target="_blank">Îlots de chaleur</a></li>
+        <li><a href="https://donnees.montreal.ca/dataset/zones-prioritaires-verdir-diminuer-impacts-vagues-chaleur" target="_blank">Zones prioritaires à verdir pour diminuer les impacts des vagues de chaleur</a></li>
+      </ul>
+      <p>
+        Les titres se ressemblent, il faudra donc expérimenter avec les données pour voir lesquelles
+        sont les plus appropriées pour le projet.
+      </p>
+
+      <h3>Autres</h3>
+      <p>
+        D’autres pistes n’ont pas été explorées pour le moment. Parmi celles-ci, il y a
+        les gouvernements du Canada et du Québec, qui ont chacun leurs données ouvertes.
+        Les universités elles-mêmes ont également des données ouvertes, et certainement
+        des données internes qu’on pourrait demander.
+      </p>
+      <p>
+        Le <a href="https://reports.aashe.org/institutions" target="_blank"></a>rapport Stars</a>,
+        qui était au centre du projet original, pourrait aussi être exploré.
+        Par contre, ces données ne sont pas géolocalisées, et sont donc moins pertinentes à des fins
+        de visualisation. Tout de même, à des fins d’archive, voici les rapports publics des
+        universités montréalaises:
+      </p>
+      <ul class="bullets">
+        <li><a href="https://reports.aashe.org/institutions/university-of-montreal-qc/report" target="_blank">Université de Montréal</a></li>
+        <li><a href="https://reports.aashe.org/institutions/mcgill-university-qc/report" target="_blank">McGill</a></li>
+        <li><a href="https://reports.aashe.org/institutions/universite-du-quebec-a-montreal-quebec/report" target="_blank">UQAM</a></li>
+        <li><a href="https://reports.aashe.org/institutions/concordia-university-qc/report" target="_blank">Concordia</a></li>
+      </ul>
+
+
+      <h2>Sites de référence</h2>
+      <p>
+        Les sites de visualisation de données géolocalisées sont nombreux et populaires sur le web.
+        Bien que ce projet ait ses particularités, des sites similaires peuvent être considérées
+        pour accélérer le processus de conception. Cette courte liste a été rapidement assemblée
+        pour servir de référence:
+      </p>
+      <ul class="bullets">
+        <li><a href="https://www.canadiansuburbs.ca/interactive-map" target="_blank">canadiansuburbs.ca</a></li>
+        <li><a href="https://www.submarinecablemap.com" target="_blank">submarinecablemap.com</a></li>
+        <li><a href="https://censusmapper.ca/maps/3053?lat=45.5&lng=-73.6" target="_blank">censusmapper.ca</a></li>
+        <li><a href="https://indoorequal.org/#map=12/45.5/-73.6" target="_blank">indoorequal.org</a></li>
+        <li><a href="https://tctrail.ca/explore-the-map" target="_blank">tctrail.ca</a></li>
+        <li><a href="https://map.parisien.cc" target="_blank">map.parisien.cc</a></li>
+      </ul>
+
+
+      <h2>Maquette de l’interface</h2>
+      <p>
+        Une maquette préliminaire a été dessinée à partir de ces références. Celle-ci est sujet à
+        changement au cours du développement. Elle ne sert qu’à donner la direction générale de
+        l’interface.
+      </p>
+      <figure>
+        <img src="resources/figures/etude/interface.webp">
+        <figcaption>Maquette de l’interface</figcaption>
+      </figure>
+
+    </article>
+  </main>
+
+  <footer></footer>
+
+</body>
+</html>
