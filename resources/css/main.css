@@ -255,6 +255,12 @@ main {
       line-height: 1;
       font-weight: 600;
       color: var(--color-accent);
+      small {
+        margin-left: .5em;
+        font-weight: 400;
+        color: var(--color-text);
+        opacity: .333;
+      }
     }
   }
 }
@@ -278,6 +284,13 @@ ul.tasks {
   }
   li.checked::before {
     background-image: url("../graphics/icons/checkmark.svg");
+    background-size: 75%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+  }
+  li.failed { color: var(--color-subdued); }
+  li.failed::before {
+    background-image: url("../graphics/icons/x.svg");
     background-size: 75%;
     background-position: 50%;
     background-repeat: no-repeat;
